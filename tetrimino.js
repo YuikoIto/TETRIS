@@ -29,7 +29,15 @@ var MINOS = [
   ],
 ];
 
-var COLORS = ['cyan', 'yellow', 'green', 'red', 'blue', 'orange', 'magenta'];
+var CATS = [
+  './CATS/124229.jpg',
+  './CATS/124558.jpg',
+  './CATS/124561.jpg',
+  './CATS/124562.jpg',
+  './CATS/124563.jpg',
+  './CATS/128627.jpg',
+  './CATS/134184.jpg',
+];
 
 function newMino() {
   var id = Math.floor(Math.random() * MINOS.length);
