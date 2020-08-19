@@ -50,6 +50,7 @@ function tick() {
     current_y++;
   } else {
     fix();
+    clearRows();
     current_mino = newMino();
     current_x = 3;
     current_y = 0;
@@ -88,6 +89,26 @@ function canMove(move_x, move_y, move_mino) {
   return true;
 }
 
+function clearRows() {
+  for (var y = ROWS - 1; y >= 0; y--) {
+    var fill = true;
+    for (var x = 0; x < COLS; x++) {
+      if (field[y][x] == 0) {
+        fill = false;
+        break;
+      }
+    }
+    if (fill) {
+      for (var v = y - 1; v >= 0; v--) {
+        for (var x = 0; x < COLS; x++) {
+          field[v + 1][x] = field[v][x];
+        }
+      }
+      y++;
+    }
+  }
+}
+
 document.body.onkeydown = function (e) {
   switch (e.keyCode) {
     case 37:
@@ -114,6 +135,7 @@ document.body.onkeydown = function (e) {
   }
   render();
 };
+
 // var field_w = 300;
 // var field_h = 600;
 // var cols = 10;
