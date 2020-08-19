@@ -17,8 +17,16 @@ var gameover = false; //gameoverかどうか判定
 var canvas2 = document.getElementById('sidebar');
 var ctx2 = canvas2.getContext('2d');
 
+const CAT_IMAGES = []
 // var canvas3 = document.getElementById('sidebar2');
 // var ctx3 = canvas2.getContext('2d');
+
+for(CAT of CATS){
+  // 画像読み込みは、それなりに重い処理なので、メモリ上にキャッシュしておく
+  var img = new Image();
+  img.src = CAT;
+  CAT_IMAGES.push(img)
+}
 
 for (var y = 0; y < ROWS; y++) {
   field[y] = [];
@@ -50,14 +58,15 @@ function render() {
 }
 
 function drawBlock(x, y, block) {
-  var img = new Image();
-  img.src = CATS[block - 1];
-  img.onload = () =>
-    ctx.drawImage(img, x * BLOCK_W, y * BLOCK_H, BLOCK_W, BLOCK_H);
+  // var img = new Image();
+  // img.src = CATS[block - 1];
+  // img.onload = () =>
+  // ctx.drawImage(IMAGES[0], x * BLOCK_W, y * BLOCK_H, BLOCK_W, BLOCK_H);
   //current_mino[y][x]がtrue=1なら
-  if (block) {
-    ctx.drawImage(img, x * BLOCK_W, y * BLOCK_H, BLOCK_W, BLOCK_H);
-  }
+  if (!block) return
+  
+  // 読み込んだ画像オブジェクトを使って描画
+  ctx.drawImage(CAT_IMAGES[block - 1], x * BLOCK_W, y * BLOCK_H, BLOCK_W, BLOCK_H);
 }
 
 function tick() {
