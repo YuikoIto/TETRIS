@@ -6,12 +6,19 @@ var BLOCK_W = SCREEN_W / COLS, //ブロックの横幅
   BLOCK_H = SCREEN_H / ROWS; //ブロックの縦幅
 var canvas = document.getElementById('field');
 var ctx = canvas.getContext('2d');
+var points = 0; //ポイント
 var current_mino;
 var current_x = 3,
   current_y = 0;
 var field = [];
 var tetris;
 var gameover = false; //gameoverかどうか判定
+
+var canvas2 = document.getElementById('sidebar');
+var ctx2 = canvas2.getContext('2d');
+
+// var canvas3 = document.getElementById('sidebar2');
+// var ctx3 = canvas2.getContext('2d');
 
 for (var y = 0; y < ROWS; y++) {
   field[y] = [];
@@ -21,11 +28,15 @@ for (var y = 0; y < ROWS; y++) {
 }
 
 current_mino = newMino();
+
 render();
 tetris = setInterval(tick, 500);
 
 function render() {
   ctx.clearRect(0, 0, SCREEN_W, SCREEN_H);
+  ctx2.font = '48px serif';
+  ctx2.textAlign = 'center';
+  ctx2.fillText(points, 150, 120);
   for (var y = 0; y < ROWS; y++) {
     for (var x = 0; x < COLS; x++) {
       drawBlock(x, y, field[y][x]);
@@ -112,12 +123,19 @@ function clearRows() {
         }
       }
       y++;
+      ctx2.clearRect(0, 0, SCREEN_W, SCREEN_H);
+      points++;
     }
   }
 }
 
 function gameOver() {
-  if (field[0][3] >= 1 || field[0][4] || field[0][5] || field[0][6]) {
+  if (
+    field[0][3] >= 1 ||
+    field[0][4] >= 1 ||
+    field[0][5] >= 1 ||
+    field[0][6] >= 1
+  ) {
     alert('gameover');
     gameover = true;
     clearInterval(tetris);
@@ -137,7 +155,7 @@ document.body.onkeydown = function (e) {
       }
       break;
     case 40:
-      if (canMove(0, 1)) {
+      if (canMove(0, 1) && !gameover) {
         current_y++;
       }
       break;
