@@ -13,7 +13,7 @@ var current_x = 3,
 var field = [];
 var tetris;
 var gameover = false; //gameoverかどうか判定
-var speed = 1000; //テトリスの落ちる速度１
+var speed; //テトリスの落ちる速度１
 
 var canvas2 = document.getElementById('sidebar');
 var ctx2 = canvas2.getContext('2d');
@@ -38,7 +38,9 @@ for (var y = 0; y < ROWS; y++) {
 
 current_mino = newMino();
 
-if (points >= 3 && points < 6) {
+if (points < 3) {
+  speed = 1000;
+} else if (points >= 3 && points < 6) {
   speed = 800;
 } else if (points >= 6 && points < 9) {
   speed = 600;
@@ -46,12 +48,17 @@ if (points >= 3 && points < 6) {
   speed = 400;
 } else if (points >= 12 && points < 14) {
   speed = 200;
-} else {
+} else if (points == 14) {
   speed = 100;
+} else if (points == 15) {
+  speed = 80;
+} else if (points == 16) {
+  speed = 70;
+} else {
+  speed = 50;
 }
-
-render();
 tetris = setInterval(tick, speed);
+render();
 
 function render() {
   ctx.clearRect(0, 0, SCREEN_W, SCREEN_H);
