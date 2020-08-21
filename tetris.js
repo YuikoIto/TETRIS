@@ -154,9 +154,9 @@ function gameOver() {
     field[0][5] >= 1 ||
     field[0][6] >= 1
   ) {
+    clearInterval(tetris);
     alert('gameover');
     gameover = true;
-    clearInterval(tetris);
   }
 }
 
