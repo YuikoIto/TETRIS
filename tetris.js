@@ -155,7 +155,9 @@ function gameOver() {
     field[0][6] >= 1
   ) {
     clearInterval(tetris);
-    alert('gameover');
+    ctx.font = '48px serif';
+    ctx.textBaseline = 'hanging';
+    ctx.strokeText('GAME OVER', 0, 300);
     gameover = true;
   }
 }
